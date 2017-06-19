@@ -1,25 +1,39 @@
 // ==UserScript==
 // @name         JDAHelpers
 // @namespace    https://github.com/rbking/JDAHelpers.git
-// @version      1.0
+// @version      1.22
 // @description  Functions to streamline JDA inputs
 // @author       Robert King
 // @match        https://timssrvprod.myloweslife.com/tm/entry/*
-// @grant        none
-// @require      https://cdn.rawgit.com/rbking/JDAHelpers/650b658f/jdaHelper.min.js
+// @grant        GM_setValue
+// @grant        GM_getValue
+// @require      https://cdn.rawgit.com/rbking/JDAHelpers/03608e2a/jdaHelper.min.js
 // ==/UserScript==
 
-let JDAhelpers = window.JDAhelpers;
+(function(jda) {
+    let rdc = GM_getValue('rdc',0),
+        ini = GM_getValue('ini','');
 
-/*
-** Change the Settings below to your own Information
-*/
-JDAhelpers.setUser({
-    'rdc': 123, 
-    'initials': 'ABC'
-});
+    /*
+    ** Validate User Information
+    */
+    rdc = jda.validateRDC(rdc);
+    ini = jda.validateInitials(ini);
 
-/*
-** Check forms and run helper functions
-*/
-JDAhelpers.checkForms();
+    if(rdc.status && ini.status) {
+        GM_setValue('rdc', rdc.value);
+        GM_setValue('ini', ini.value);
+
+        /*
+        ** Leave as empty array [] unless
+        ** Set to a JSON object with two Fields
+        ** i.e. [{"BOL":"2919445","TrailerNum":"279889"},...]
+        */
+        let trls = [];
+        jda.setTrailers(trls);
+    /*
+    ** Check forms and run helper functions
+    */
+        jda.checkForms();
+    }
+})(JDAhelpers);

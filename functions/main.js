@@ -1,24 +1,57 @@
-// Here You can type your custom JavaScript...
+/**
+ * Main entry point into the JDAHelpers userscript
+ */
 let doc = window.document,
-    user = {},
-    frms = [
-        { 'formObj': doc.ApMiscVoucherForm,     'helperFn': voucherFormAssist },
-        { 'formObj': doc.APVoucherListForm,     'helperFn': voucherListAssist },
-        { 'formObj': doc.MemoForm,              'helperFn': memoFormAssist },
-        { 'formObj': doc.RateCalcMainForm,      'helperFn': rateFormAssist},
-        { 'formObj': doc.StopConfirmationForm,  'helperFn': stopConfirmationFormAssist},
-        { 'formObj': doc.LoadVehicleInfoForm,   'helperFn': vehicleFormAssist }        
-    ],
+    
+    /**
+     * Create Objecect that will expose functions to set
+     * variables inside inputs object
+     */
     JDAhelpers = {
-        setUser: (params) => { user = params},
-        checkForms: checkForms
-    };
+        checkForms:         checkForms,
+        validateRDC:        validateRDC,
+        validateInitials:   validateInitials,
+        setTrailers:        setTrailers
+    },
 
-    function checkForms() {
-        frms.forEach((index, frm) => {
-            let form = frms[frm];
-            if (typeof form.formObj != 'undefined') form.helperFn(form.formObj, user);
-        });
-    };
+    /**
+     * Inputs keeps information submitted by the User
+     * Functions to check user input or in inputs.js
+     */
+    inputs = {
+        user: {},
+        trailers: {}
+    },
 
-    window.JDAhelpers = JDAhelpers;
+    /**
+     * Forms object to map forms to helper functions
+     * Each helper function is housed in it's own module 
+     */
+    frms = [
+        { 'formObj': doc.ApMiscVoucherForm,     'helperFn': voucherFormAssist           },
+        { 'formObj': doc.APVoucherListForm,     'helperFn': voucherListAssist           },
+        { 'formObj': doc.MemoForm,              'helperFn': memoFormAssist              },
+        { 'formObj': doc.RateCalcMainForm,      'helperFn': rateFormAssist              },
+        { 'formObj': doc.StopConfirmationForm,  'helperFn': stopConfirmationFormAssist  },
+        { 'formObj': doc.LoadVehicleInfoForm,   'helperFn': vehicleFormAssist           }        
+    ];
+
+/**
+ * Main function to check if a form is loaded on the page
+ * and call it's helper functions with passed values
+ */
+function checkForms() {
+    frms.forEach((index, frm) => {
+        let form = frms[frm];
+        if (typeof form.formObj != 'undefined') { form.helperFn(form.formObj, inputs); }
+    });
+};
+
+/**
+ * Expose the JDAhelpers object to userscript
+ */
+window.JDAhelpers = JDAhelpers;
+
+/**
+ * ALL OTHER SCRIPTS IN ../functions ARE ATTACHED USING GULP
+ */

@@ -1,9 +1,16 @@
-function voucherFormAssist(frm, user) {
+/**
+ * Insert default values into the MFC Voucher Form
+ * Currently setup for Trailer Detentions
+ * @param {*} frm 
+ * @param {*} inputs 
+ */
+function voucherFormAssist(frm, inputs) {
     /*USER AND RDC VARIABLES*/
-    let carr, 
+    let user = inputs.user,
+        carr, 
         dol, 
 
-        /*MAKE A LIST OF KNOW CARRIES AND THEIR TARRIF CODES*/
+        /*MAKE A LIST OF KNOW CARRIERS AND THEIR TARRIF CODES*/
         carrTrf = {
             'GPTD': '1917',
             'SCNN': '1945',
@@ -26,7 +33,7 @@ function voucherFormAssist(frm, user) {
             'HJBT': '1992'
         };
 
-    /*Start the Initialation*/
+    /*Run at the Start*/
     init();
 
     function init() {
@@ -45,28 +52,28 @@ function voucherFormAssist(frm, user) {
        let mfcDefaultValues = [
 
             /*VOUCHER SECTION*/
-            { name: 'carrCode', value: carr },
-            { name: 'tariffNumber', value: carrTrf[carr], colorBg: true },
-            { name: 'custCode', value: 'LOW' },
-            { name: 'service', value: 'TL_VAN' },
-            { name: 'logisticsGroup', value: 'LOW2' },
-            { name: 'refNumber', value: formatVoucher() },
+            { name: 'carrCode',         value: carr                         },
+            { name: 'tariffNumber',     value: carrTrf[carr], colorBg: true },
+            { name: 'custCode',         value: 'LOW'                        },
+            { name: 'service',          value: 'TL_VAN'                     },
+            { name: 'logisticsGroup',   value: 'LOW2'                       },
+            { name: 'refNumber',        value: formatVoucher()              },
 
             /*ADJUSTMENT SECTION*/
-            { name: 'level_options', value: 'OPTION' },
-            { name: 'chargeCode', value: 'DETFR', colorBg: true },
-            { name: 'reasonCode_options', value: 'INBO_NO_EST', colorBg: true },
-            { name: 'chargedAmount', value: dol, colorBg: true },
+            { name: 'level_options',        value: 'OPTION'                       },
+            { name: 'chargeCode',           value: 'DETFR',         colorBg: true },
+            { name: 'reasonCode_options',   value: 'INBO_NO_EST',   colorBg: true },
+            { name: 'chargedAmount',        value: dol,             colorBg: true },
 
             /*VOUCHER DETAILS SECTION*/
-            { name: 'shipmentType', value: 'NR' },
-            { name: 'profitCenter_options', value: '451000', colorBg: true },
-            { name: 'voucherType_options', value: 'MFC' },
-            { name: 'costCenter_options', value: 'DOMESTIC' },
+            { name: 'shipmentType',         value: 'NR'                     },
+            { name: 'profitCenter_options', value: '451000', colorBg: true  },
+            { name: 'voucherType_options',  value: 'MFC'                    },
+            { name: 'costCenter_options',   value: 'DOMESTIC'               },
 
             /*ORIGIN/DESTINATION SECTION*/
-            { name: 'origLocType', value: 'HUB', colorBg: true },
-            { name: 'origLocID', value: `L${user.rdc}`, colorBg: true }
+            { name: 'origLocType',  value: 'HUB',           colorBg: true },
+            { name: 'origLocID',    value: `L${user.rdc}`,  colorBg: true }
         ];
 
 
@@ -85,12 +92,12 @@ function voucherFormAssist(frm, user) {
 
     /*FORMAT DATE INTO YYYYMMDDHHmm*/
     function modDate() {
-        let dt = new Date(),
-            year = dt.getFullYear(),
-            month = addLeadingZeros(dt.getMonth() + 1),
-            day = addLeadingZeros(dt.getDate()),
-            hour = addLeadingZeros(dt.getHours()),
-            min = addLeadingZeros(dt.getMinutes());
+        let dt      = new Date(),
+            year    = dt.getFullYear(),
+            month   = addLeadingZeros(dt.getMonth() + 1),
+            day     = addLeadingZeros(dt.getDate()),
+            hour    = addLeadingZeros(dt.getHours()),
+            min     = addLeadingZeros(dt.getMinutes());
 
         return `${year}${month}${day}${hour}${min}`;
 

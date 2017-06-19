@@ -1,19 +1,21 @@
-function voucherListAssist() {
+/**
+ * Selects the checkmark of the most recently
+ * updated voucher
+ * @param {*} frm 
+ * @param {*} inputs 
+ */
+function voucherListAssist(frm, inputs) {
     let msg = jQuery('#tmMessageLink').text(),
-        sPh = 'Voucher',
-        ePh = ' ',
-        chk,
-        i = 0,
-        j = 0;
+        sPh = 'Voucher',                        
+        ePh = ' ';                              
 
     if (msg.length > 0) {
-        i = msg.lastIndexOf(sPh) + sPh.length;
-        j = msg.lastIndexOf(ePh);
+        let i = (msg.lastIndexOf(sPh) + sPh.length),
+            j = msg.lastIndexOf(ePh);
+        
         msg = msg.slice(i, j);
         if (msg.length>0) {
-            if (!isNaN(msg)) {
-                jQuery(`input[value*=${msg}]`).trigger('click')
-            }
+            if (!isNaN(msg)) { jQuery(`input[value*=${msg}]`).trigger('click'); }
         }
     }
 };

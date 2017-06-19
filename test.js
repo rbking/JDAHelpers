@@ -1,3 +1,7 @@
+/**
+ * This module is used to generate JSON from access query
+ */
+
 const ADODB = require('node-adodb');
 const fs = require('fs');
 
