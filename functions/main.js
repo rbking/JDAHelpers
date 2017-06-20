@@ -33,7 +33,8 @@ let doc = window.document,
         { 'formObj': doc.MemoForm,              'helperFn': memoFormAssist              },
         { 'formObj': doc.RateCalcMainForm,      'helperFn': rateFormAssist              },
         { 'formObj': doc.StopConfirmationForm,  'helperFn': stopConfirmationFormAssist  },
-        { 'formObj': doc.LoadVehicleInfoForm,   'helperFn': vehicleFormAssist           }        
+        { 'formObj': doc.LoadVehicleInfoForm,   'helperFn': vehicleFormAssist           },
+        { 'formObj': doc.StopListForm,          'helperFn': stopFormAssist              }        
     ];
 
 /**
@@ -41,7 +42,7 @@ let doc = window.document,
  * and call it's helper functions with passed values
  */
 function checkForms() {
-    frms.forEach((index, frm) => {
+    frms.some((index, frm) => {
         let form = frms[frm];
         if (typeof form.formObj != 'undefined') { form.helperFn(form.formObj, inputs); }
     });

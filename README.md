@@ -11,9 +11,9 @@
 
 ![jda.user.js](../../raw/master/imgs/jda_install.jpg)
 
-4 The next time you open JDA, you will be asked for your **RDC Number** and your **3 Initials**.
+4 The next time you open JDA, you will be asked for your **RDC Number** and **3 Initials**.
 
-5 **Any future updates will be installed by Tampermonkey as it will check for updates periodically.**
+5 **Any future updates will be installed by Tampermonkey as it will periodically check for updates.**
 
 ## Usage
 
@@ -29,14 +29,18 @@
 * #### Uses "Inbound PO Trailer Detention" in the Memo Field as the Default Value.
     ![mfc_check](../../raw/master/imgs/mfc_5.jpg)
 ___
-### Rate Calculator
-* #### Fills in Rate Calculator with default values
-    ![mfc_check](../../raw/master/imgs/rate_calc.jpg)
-___
 ### Load Information    
 * #### Uses **Load ID** as Master BOL Number
     ![mfc_check](../../raw/master/imgs/confirm_pickup.jpg)
 * #### Fills in the LTL Trailer Number.  Takes a little bit of manual setup.
+___
+### Stop Information
+* #### Adds two buttons at the bottom of the list for faster selction of stops.
+    ![mfc_check](../../raw/master/imgs/stop_form.jpg)
+___
+### Rate Calculator
+* #### Fills in Rate Calculator with default values
+    ![mfc_check](../../raw/master/imgs/rate_calc.jpg)
 ___
 ## Contributing
 1. Fork it!
