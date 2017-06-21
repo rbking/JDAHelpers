@@ -29,7 +29,9 @@
 * #### Uses "Inbound PO Trailer Detention" in the Memo Field as the Default Value.
     ![mfc_check](../../raw/master/imgs/mfc_5.jpg)
 ___
-### Load Information    
+### Load Information
+* #### Adds Quick Links of Commonly Used Buttons at Bottom of Form    
+    ![mfc_check](../../raw/master/imgs/load_form.jpg)
 * #### Uses **Load ID** as Master BOL Number
     ![mfc_check](../../raw/master/imgs/confirm_pickup.jpg)
 * #### Fills in the LTL Trailer Number.  Takes a little bit of manual setup.
