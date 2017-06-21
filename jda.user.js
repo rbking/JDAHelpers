@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JDAHelpers
 // @namespace    https://github.com/rbking/JDAHelpers.git
-// @version      1.29
+// @version      2.0.0
 // @description  Functions to streamline JDA inputs
 // @author       Robert King
 // @match        https://timssrvprod.myloweslife.com/tm/entry/*
