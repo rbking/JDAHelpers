@@ -25,7 +25,21 @@ function loadFormAssist(frm, inputs) {
                                 </tr>
                             </tbody>
                         </table>
-                    </td>                    
+                    </td>
+                    <td nowrap="yes">
+                        <table id="buttonID0" border="1" cellspacing="0" cellpadding="0" class="buttonBorder">
+                            <tbody>
+                                <tr>
+                                    <td id="buttonRegular" nowrap="yes" class="buttonText">
+                                        <a href="javascript:if(validRowsSelected(document.LoadList,'ONEPLUS','2', tbo)) submitMenu('VEHICLE_INFORMATION_',false, document.LoadList);" 
+                                        tabindex="39" 
+                                        onmouseover="i2uiSetMenuCoords (this,event)">&nbsp;&nbsp;Vehicle Information&nbsp;&nbsp;
+                                        </a>
+                                    </td>                                                                                                                        
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>                             
                 </tr>
             </tbody>
         </table>
