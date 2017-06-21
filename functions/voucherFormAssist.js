@@ -12,25 +12,26 @@ function voucherFormAssist(frm, inputs) {
 
         /*MAKE A LIST OF KNOW CARRIERS AND THEIR TARRIF CODES*/
         carrTrf = {
-            'GPTD': '1917',
-            'SCNN': '1945',
-            'HUBG': '1994',
-            'PTAG': '1938',
-            'QPMT': '1939',
-            'WSXI': '1955',
-            'SUSE': '2007',
-            'AISB': '2422',
-            'EPES': '1985',
-            'SNCK': '1964',
-            'FCLC': '1712',
-            'CRCR': '1981',
-            'FIXR': '1714',
-            'CDNK': '1961',
-            'ROEV': '1943',
-            'USXI': '1950',
-            'MLXP': '2001',
-            'DART': '1983',
-            'HJBT': '1992'
+            "AISB": "2422",
+            "CDNK": "1961",
+            "CRCR": "1981",
+            "DART": "1983",
+            "DDIV": "1685",
+            "EPES": "1985",
+            "FCLC": "1712",
+            "FIXR": "1714",
+            "GPTD": "1917",
+            "HJBT": "1992",
+            "HUBG": "1994",
+            "MLXP": "2001",
+            "PTAG": "1938",
+            "QPMT": "1939",
+            "ROEV": "1943",
+            "SCNN": "1945",
+            "SNCK": "1964",
+            "SUSE": "2007",
+            "USXI": "1950",
+            "WSXI": "1955"
         };
 
     /*Run at the Start*/
