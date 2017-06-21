@@ -35,6 +35,7 @@ let doc = window.document,
         { 'formObj': doc.StopConfirmationForm,  'helperFn': stopConfirmationFormAssist  },
         { 'formObj': doc.LoadVehicleInfoForm,   'helperFn': vehicleFormAssist           },
         { 'formObj': doc.LoadList,              'helperFn': loadFormAssist              },
+        { 'formObj': doc.LoadListForm,          'helperFn': loadListFormAssist          },
         { 'formObj': doc.StopListForm,          'helperFn': stopFormAssist              }        
     ];
 
