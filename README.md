@@ -36,6 +36,10 @@ ___
     ![mfc_check](../../raw/master/imgs/confirm_pickup.jpg)
 * #### Fills in the LTL Trailer Number.  Takes a little bit of manual setup.
 ___
+### Track and Trace
+* #### Adds Quick Links of Commonly Used Buttons at Bottom of Form    
+    ![mfc_check](../../raw/master/imgs/loadlist_form.jpg)
+___
 ### Stop Information
 * #### Adds two buttons at the bottom of the list for faster selction of stops.
     ![mfc_check](../../raw/master/imgs/stop_form.jpg)
