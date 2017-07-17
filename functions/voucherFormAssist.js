@@ -13,14 +13,17 @@ function voucherFormAssist(frm, inputs) {
         /*MAKE A LIST OF KNOW CARRIERS AND THEIR TARRIF CODES*/
         carrTrf = {
             "AISB": "2422",
+            "BNRP": "1959",
             "CDNK": "1961",
             "CRCR": "1981",
             "DART": "1983",
             "DDIV": "1685",
             "EPES": "1985",
+            "EPML": "1932",
             "FCLC": "1712",
             "FIXR": "1714",
             "GPTD": "1917",
+            "HABC": "1725",
             "HJBT": "1992",
             "HUBG": "1994",
             "MLXP": "2001",
