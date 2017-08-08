@@ -34,6 +34,7 @@ function voucherFormAssist(frm, inputs) {
             "SNCK": "1964",
             "SUSE": "2007",
             "USXI": "1950",
+            "WENP": "1952",
             "WSXI": "1955"
         };
 
