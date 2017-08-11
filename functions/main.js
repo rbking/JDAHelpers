@@ -28,15 +28,17 @@ let doc = window.document,
      * Each helper function is housed in it's own module 
      */
     frms = [
-        { 'formObj': doc.ApMiscVoucherForm,     'helperFn': voucherFormAssist           },
-        { 'formObj': doc.APVoucherListForm,     'helperFn': voucherListAssist           },
-        { 'formObj': doc.MemoForm,              'helperFn': memoFormAssist              },
-        { 'formObj': doc.RateCalcMainForm,      'helperFn': rateFormAssist              },
-        { 'formObj': doc.StopConfirmationForm,  'helperFn': stopConfirmationFormAssist  },
-        { 'formObj': doc.LoadVehicleInfoForm,   'helperFn': vehicleFormAssist           },
-        { 'formObj': doc.LoadList,              'helperFn': loadFormAssist              },
-        { 'formObj': doc.LoadListForm,          'helperFn': loadListFormAssist          },
-        { 'formObj': doc.StopListForm,          'helperFn': stopFormAssist              }        
+        { 'formObj': doc.ApMiscVoucherForm,             'helperFn': voucherFormAssist           },
+        { 'formObj': doc.APVoucherListForm,             'helperFn': voucherListAssist           },
+        { 'formObj': doc.MemoForm,                      'helperFn': memoFormAssist              },
+        { 'formObj': doc.RateCalcMainForm,              'helperFn': rateFormAssist              },
+        { 'formObj': doc.StopConfirmationForm,          'helperFn': stopConfirmationFormAssist  },
+        { 'formObj': doc.LoadVehicleInfoForm,           'helperFn': vehicleFormAssist           },
+        { 'formObj': doc.LoadList,                      'helperFn': loadFormAssist              },
+        { 'formObj': doc.LoadListForm,                  'helperFn': loadListFormAssist          },
+        { 'formObj': doc.StopListForm,                  'helperFn': stopFormAssist              },
+        { 'formObj': doc.IntegrationRequestListForm,    'helperFn': integrateFormAssist         },
+        { 'formObj': doc.IntegrationRequestUploadForm,  'helperFn': integrateUpFormAssist       }       
     ];
 
 /**
