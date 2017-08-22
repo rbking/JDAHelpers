@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         JDAHelpers
 // @namespace    https://github.com/rbking/JDAHelpers.git
-// @version      2.1.0
+// @version      2.2.0
 // @description  Functions to streamline JDA inputs
 // @author       Robert King
 // @match        https://timssrvprod.myloweslife.com/tm/entry/*
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @require      https://cdn.rawgit.com/rbking/JDAHelpers/1ce87b0a/jdaHelper.min.js
+// @require      https://cdn.rawgit.com/rbking/JDAHelpers/7119eed7/jdaHelper.min.js
 // ==/UserScript==
 
 (function(jda) {
