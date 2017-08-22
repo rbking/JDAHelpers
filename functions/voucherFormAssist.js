@@ -27,6 +27,7 @@ function voucherFormAssist(frm, inputs) {
             "HJBT": "1992",
             "HUBG": "1994",
             "MLXP": "2001",
+            "PGLI": "1936",
             "PTAG": "1938",
             "QPMT": "1939",
             "ROEV": "1943",
@@ -42,73 +43,235 @@ function voucherFormAssist(frm, inputs) {
     init();
 
     function init() {
-        /*Gather the Carrier SCAC*/
-        carr = prompt('Enter the SCAC');
-        if(carr !== null) carr = carr.toUpperCase();
+        addModal();     
+        setCarrierRowSource();
+        onMFCTypeChange();
 
-        /*Gather the MFC amount*/
-        dol = prompt('Enter the $ amount', 50);
-
-        fillInDefaults();
+        function setCarrierRowSource() {
+            let sRwSrc = '';
+            for (let car in carrTrf) {
+                sRwSrc += `<option value = "${carrTrf[car]}">${car}</option>`;
+            }
+            jQuery('#mfcCarrier').append(sRwSrc);
+        };
+        
     };
 
-    function fillInDefaults() {
-       /*Set Default Values Based on Inputs*/
-       let mfcDefaultValues = [
+    function addModal() {
+        /* Add jQuery UI Custom Form Styles */
+        jQuery('head').append(`
+            <style>
+                label, input { display:block; }
+                input.text { margin-bottom:12px; width: 90%; padding: .4em; }
+                select { margin-bottom:12px; width: 95%; padding: .4em; }
+                fieldset { padding:0; border:0; margin-top:25px; }
+                .ui-dialog .ui-state-error { padding: .3em; }
+            </style>
+        `);
+        /* Add jQuery UI Custom Modal */
+        jQuery('body').prepend(`
+            <button id="create-user">Open Modal</button>
+            <div id="dialog-form" title="Miscellaneous Freight Charges">          
+                <form id="mfcForm">
+                    <fieldset>
+                        <!-- Choose Carrier -->
+                        <label for="mfcCarrier">Select Carrier</label>
+                        <select id="mfcCarrier" name="mfcCarrier" class="select ui-widget-content ui-corner-all">
+                        </select>
 
-            /*VOUCHER SECTION*/
-            { name: 'carrCode',         value: carr                         },
-            { name: 'tariffNumber',     value: carrTrf[carr], colorBg: true },
-            { name: 'custCode',         value: 'LOW'                        },
-            { name: 'service',          value: 'TL_VAN'                     },
-            { name: 'logisticsGroup',   value: 'LOW2'                       },
-            { name: 'refNumber',        value: formatVoucher()              },
+                        <!-- Choose MFC Type -->
+                        <label for="mfcType">MFC Type</label>
+                        <select id="mfcType" name="mfcType" onChange="onMFCTypeChange(this.value)"
+                                class="text ui-widget-content ui-corner-all">
+                            <option value=1>Trailer Detention</option>
+                            <option value=2>Redelivery</option>
+                            <option value=3>Trailer Repair</option>
+                        </select>
+                        
+                        <!-- Enter Charge Amount -->
+                        <label class="h4">MFC Charge Amount</label>
+                        <span style="float:left;margin-top:6px">$</span>
+                        <input type="text" id="mfcAmount" name="mfcAmount" value=50
+                            class="text ui-widget-content ui-corner-all">                                    
 
-            /*ADJUSTMENT SECTION*/
-            { name: 'level_options',        value: 'OPTION'                       },
-            { name: 'chargeCode',           value: 'DETFR',         colorBg: true },
-            { name: 'reasonCode_options',   value: 'INBO_NO_EST',   colorBg: true },
-            { name: 'chargedAmount',        value: dol,             colorBg: true },
+                        <div class="mfc-ops">
+                            <!-- Choose Type of Location to Charge -->
+                            <label for="mfcOrigLocType">Location Type</label>
+                            <select id="mfcOrigLocType" name="mfcOrigLocType"
+                                class="text ui-widget-content ui-corner-all">
+                                <option value="HUB">RDC</option>
+                                <option value="DC">Store</option>                                    
+                            </select>
+                            
+                            <!-- Enter Store to Charge To -->
+                            <label for="mfcStore">Charge Location</label>
+                            <input type="text" id="mfcStore" name="mfcStore" value="L${user.rdc}"
+                                class="text ui-widget-content ui-corner-all">
+                        </div>
 
-            /*VOUCHER DETAILS SECTION*/
-            { name: 'shipmentType',         value: 'NR'                     },
-            { name: 'profitCenter_options', value: '451000', colorBg: true  },
-            { name: 'voucherType_options',  value: 'MFC'                    },
-            { name: 'costCenter_options',   value: 'DOMESTIC'               },
+                        <!-- Hidden Fields --> 
+                        <div>
+                            <input type="hidden" id="mfcChargeCode" name="mfcChargeCode" value="DETFR"></input>
+                            <input type="hidden" id="mfcReasonCode" name="mfcReasonCode" value="INBO_NO_EST"></input>
+                            <input type="hidden" id="mfcProfitCenter"name="mfcProfitCenter" value="451000"></input>                                                                     
+                        </div>
 
-            /*ORIGIN/DESTINATION SECTION*/
-            { name: 'origLocType',  value: 'HUB',           colorBg: true },
-            { name: 'origLocID',    value: `L${user.rdc}`,  colorBg: true }
-        ];
+                        <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                    </fieldset>
+                </form>
+            </div>
+            <script>
+                let dialog, 
+                    form;            
+                
+                dialog = jQuery( "#dialog-form" ).dialog({
+                    autoOpen: true,
+                    height: 500,
+                    width: 350,
+                    modal: true,
+                    buttons: {
+                        "Fill Out MFC": onSubmitMFC,
+                        Close: function() {
+                            dialog.dialog( "close" );
+                        }
+                    },
+                    close: function() {
+                        form[ 0 ].reset();                        
+                    }
+                });
+            
+                form = dialog.find( "form" ).on( "submit", function( event ) {
+                    event.preventDefault();
+                    onSubmitMFC();;
+                });
+            
+                jQuery( "#create-user" ).button().on( "click", function() {
+                    dialog.dialog( "open" );
+                });
 
+                function onSubmitMFC() {
+                   let data = {};
+                   // Capture all the data
+                   data.mfcCarrierName = jQuery('#mfcCarrier option:selected').text();
+                   jQuery('#mfcForm :input')
+                        .serializeArray()
+                        .forEach((input) => {
+                            data[input.name] = input.value
+                        });
+                    //console.log(data);
+                    fillInDefaults(data);
+                };
 
-        /*LOOP THROUGH FIELDS AND ADD VALUES AND COLOR*/
-        mfcDefaultValues.forEach((item, index) => {
-                let e = frm[item.name];
-                e.value = item.value;
-                if (item.colorBg === true) e.style.backgroundColor = 'yellow';
-            });
-    }
+                function onMFCTypeChange(value) {
+                    let hide = true,
+                        objVals = [];
+                    
+                    switch (parseInt(value)) {
+                        case 1: // Detention Charges
+                            objVals = [
+                                           { name: "mfcChargeCode"     , value: "DETFR"          },
+                                           { name: "mfcReasonCode"     , value: "INBO_NO_EST"    },
+                                           { name: "mfcProfitCenter"   , value:"451000"          },    
+                                           { name: "mfcStore"          , value: "L${user.rdc}"   },
+                                           { name: "mfcOrigLocType"    , value: "HUB"            }
+                                       ];
+                            break;
+                        case 2: // Redelivery Charges
+                            hide=false;
+                            objVals = [
+                                           { name: "mfcChargeCode"     , value: "DEPFR"          },
+                                           { name: "mfcReasonCode"     , value: "OBOUND_NO_ES"   },
+                                            { name: "mfcProfitCenter"  , value:"862500"          },    
+                                           { name: "mfcStore"          , value: "L"              },
+                                           { name: "mfcOrigLocType"    , value: "DC"             }
+                                       ];
+                            break;
+                        case 3: // Trailer Repairs                            
+                            objVals = [
+                                           { name: "mfcChargeCode"     , value: "DCEFR"          },
+                                           { name: "mfcReasonCode"     , value: "VEH_REPAIRS"    },
+                                           { name: "mfcProfitCenter"   , value:"891750"          },    
+                                           { name: "mfcStore"          , value: "L${user.rdc}"   },
+                                           { name: "mfcOrigLocType"    , value: "DC"             }
+                                       ];                        
+                            break;
+                        default:
+                    };
 
-    /*FORMAT UNIQUE VOUCHER NAME*/
-    function formatVoucher() {
-        return `MFC${modDate()}${user.initials}`;
-    };
+                    if(hide===true) { 
+                        jQuery('.mfc-ops').addClass("ui-helper-hidden");
+                    } else {
+                        jQuery('.mfc-ops').removeClass("ui-helper-hidden");
+                    };
 
-    /*FORMAT DATE INTO YYYYMMDDHHmm*/
-    function modDate() {
-        let dt      = new Date(),
-            year    = dt.getFullYear(),
-            month   = addLeadingZeros(dt.getMonth() + 1),
-            day     = addLeadingZeros(dt.getDate()),
-            hour    = addLeadingZeros(dt.getHours()),
-            min     = addLeadingZeros(dt.getMinutes());
+                    objVals.forEach((hidden) => {
+                        jQuery('#'+hidden.name).val(hidden.value);
+                    });
+                };
 
-        return `${year}${month}${day}${hour}${min}`;
+                function fillInDefaults(data) {
+                    /*Set Default Values Based on Inputs*/
+                    let mfcDefaultValues = [
 
-        function addLeadingZeros(data) {
-            return `00${data}`.slice(-2);
-        }
+                        /*VOUCHER SECTION*/
+                        { name: 'carrCode',         value: data.mfcCarrierName                         },
+                        { name: 'tariffNumber',     value: data.mfcCarrier, colorBg: true },
+                        { name: 'custCode',         value: 'LOW'                        },
+                        { name: 'service',          value: 'TL_VAN'                     },
+                        { name: 'logisticsGroup',   value: 'LOW2'                       },
+                        { name: 'refNumber',        value: formatVoucher()              },
 
-    }
+                        /*ADJUSTMENT SECTION*/
+                        { name: 'level_options',        value: 'OPTION'                       },
+                        { name: 'chargeCode',           value: data.mfcChargeCode,         colorBg: true },
+                        { name: 'reasonCode_options',   value: data.mfcReasonCode,   colorBg: true },
+                        { name: 'chargedAmount',        value: data.mfcAmount,             colorBg: true },
+
+                        /*VOUCHER DETAILS SECTION*/
+                        { name: 'shipmentType',         value: 'NR'                     },
+                        { name: 'profitCenter_options', value: data.mfcProfitCenter, colorBg: true  },
+                        { name: 'voucherType_options',  value: 'MFC'                    },
+                        { name: 'costCenter_options',   value: 'DOMESTIC'               },
+
+                        /*ORIGIN/DESTINATION SECTION*/
+                        { name: 'origLocType',  value: data.mfcOrigLocType,           colorBg: true },
+                        { name: 'origLocID',    value: data.mfcStore,  colorBg: true }
+                    ];
+
+                    /*LOOP THROUGH FIELDS AND ADD VALUES AND COLOR*/
+                    mfcDefaultValues.forEach((item, index) => {
+                        let frm = document.ApMiscVoucherForm,
+                            e   = frm[item.name];
+                        e.value = item.value;
+                        if (item.colorBg === true) e.style.backgroundColor = 'yellow';
+                    });
+
+                    /*FORMAT UNIQUE VOUCHER NAME*/
+                    function formatVoucher() {
+                        return 'MFC'+modDate()+'${user.initials}';
+                    };
+
+                    /*FORMAT DATE INTO YYYYMMDDHHmm*/
+                    function modDate() {
+                        let dt      = new Date(),
+                            year    = dt.getFullYear(),
+                            month   = addLeadingZeros(dt.getMonth() + 1),
+                            day     = addLeadingZeros(dt.getDate()),
+                            hour    = addLeadingZeros(dt.getHours()),
+                            min     = addLeadingZeros(dt.getMinutes());
+
+                        return year+month+day+hour+min;
+
+                        function addLeadingZeros(data) {
+                            return String('00'+data).slice(-2);
+                        };
+                    };
+                }
+
+            </script>
+
+        `);
+    }    
+    
 };
