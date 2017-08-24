@@ -236,7 +236,9 @@ function voucherFormAssist(frm, inputs) {
 
                         /*ORIGIN/DESTINATION SECTION*/
                         { name: 'origLocType',  value: data.mfcOrigLocType,           colorBg: true },
-                        { name: 'origLocID',    value: data.mfcStore,  colorBg: true }
+                        { name: 'origLocID',    value: data.mfcStore,  colorBg: true },
+                        { name: 'destLocType',  value: 'HUB',           colorBg: true },
+                        { name: 'destLocID',    value: "L${user.rdc}",  colorBg: true }  
                     ];
 
                     /*LOOP THROUGH FIELDS AND ADD VALUES AND COLOR*/
