@@ -18,10 +18,8 @@
 ## Usage
 
 ### MFCs
-* #### Asks for Carrier SCAC to match with Tarrif
-    ![mfc_values](../../raw/master/imgs/mfc_1.jpg)
-* #### Asks for $ Amount
-    ![mfc_values](../../raw/master/imgs/mfc_2.jpg)
+* #### A modal pops up allowing for multiple types of MFCs.
+    ![mfc_values](../../raw/master/imgs/mfc_modal.jpg)
 * #### Fills in default values that are commonly used for Trailer Detention
     ![mfc_values](../../raw/master/imgs/mfc_3.jpg)
 * #### Selects the checkmark of the updated voucher.
