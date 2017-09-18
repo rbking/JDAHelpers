@@ -7,7 +7,7 @@
 // @match        https://timssrvprod.myloweslife.com/tm/entry/*
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @require      https://cdn.rawgit.com/rbking/JDAHelpers/84bbf1f4/jdaHelper.min.js
+// @require      https://cdn.rawgit.com/rbking/JDAHelpers/75e7781d/jdaHelper.min.js
 // ==/UserScript==
 
 (function(jda) {
