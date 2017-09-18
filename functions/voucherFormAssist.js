@@ -29,6 +29,7 @@ function voucherFormAssist(frm, inputs) {
             "HUBG": "1994",
             "MLXP": "2001",
             "PGLI": "1936",
+            "PSKL": "2264",
             "PTAG": "1938",
             "QPMT": "1939",
             "ROED": "2284",
