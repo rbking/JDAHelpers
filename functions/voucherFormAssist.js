@@ -45,16 +45,16 @@ function voucherFormAssist(frm, inputs) {
         },
         
         /*MFC Types*/
-        mfcType = [
+        mfcType = [            
             {
-                "name": "Trailer Detention",
-                "hide": true,                
+                "name": "CNG (Fuel)",  
+                "hide": true,              
                 "optValue": [{                    
-                    "CC": "DETFR",
-                    "RC": "INBO_NO_EST",
-                    "PC": "451000",    
+                    "CC": "DFPFR",
+                    "RC": "OBOUND_NO_ES",
+                    "PC": "891305",    
                     "ST": `L${user.rdc}`,
-                    "OT": "HUB"
+                    "OT": "DC"
                 }]
             },
             {
@@ -69,27 +69,16 @@ function voucherFormAssist(frm, inputs) {
                 }]
             },
             {
-                "name": "Trailer Repair",
+                "name": "Trailer Detention",
                 "hide": true,                
-                "optValue": [{
-                    "CC": "DCEFR",
-                    "RC": "VEH_REPAIRS",
-                    "PC": "891750",    
-                    "ST": `L${user.rdc}`,
-                    "OT": "DC"
-                }]
-            },
-            {
-                "name": "Tolls",  
-                "hide": true,              
                 "optValue": [{                    
-                    "CC": "BRDFR",
-                    "RC": "OBOUND_NO_ES",
-                    "PC": "891305",    
+                    "CC": "DETFR",
+                    "RC": "INBO_NO_EST",
+                    "PC": "451000",    
                     "ST": `L${user.rdc}`,
-                    "OT": "DC"
+                    "OT": "HUB"
                 }]
-            },
+            },            
             {
                 "name": "Trailer Rental",  
                 "hide": true,              
@@ -102,10 +91,21 @@ function voucherFormAssist(frm, inputs) {
                 }]
             },
             {
-                "name": "CNG (Fuel)",  
+                "name": "Trailer Repair",
+                "hide": true,                
+                "optValue": [{
+                    "CC": "DCEFR",
+                    "RC": "VEH_REPAIRS",
+                    "PC": "891750",    
+                    "ST": `L${user.rdc}`,
+                    "OT": "DC"
+                }]
+            },            
+            {
+                "name": "Tolls",  
                 "hide": true,              
                 "optValue": [{                    
-                    "CC": "DFPFR",
+                    "CC": "BRDFR",
                     "RC": "OBOUND_NO_ES",
                     "PC": "891305",    
                     "ST": `L${user.rdc}`,
@@ -146,13 +146,13 @@ function voucherFormAssist(frm, inputs) {
                 /* Generate the Rowsource for the Option Buttons */
                 sRwSrc += `<option data-mfc=${JSON.stringify(mapper)} 
                                    data-hide=${type.hide} 
-                                   value=${index}>${type.name}
+                                   value="${type.name}">${type.name}
                             </option>`;
             });       
 
             jQuery('#mfcType')
                 .append(sRwSrc)
-                .val(0)
+                .val('Trailer Detention')
                 .change();
         }
         
@@ -243,9 +243,9 @@ function voucherFormAssist(frm, inputs) {
                 let dialog, 
                     form;   
                 
-                function onMFCTypeChange(value) {                
-                    let type = value.dataset;
-                    
+                function onMFCTypeChange(selected) {                
+                    let type = selected.dataset;
+
                     /* Hide Certain Controls if not needed */
                     if(type.hide==='true') { 
                         jQuery('.mfc-ops').addClass("ui-helper-hidden");
@@ -287,7 +287,7 @@ function voucherFormAssist(frm, inputs) {
                 function onSubmitMFC() {
                    let data = {};
                    // Capture all the data
-                   data.mfcCarrierName = jQuery('#mfcCarrier option:selected').text();
+                   data.mfcCarrierName = jQuery('#mfcCarrier :selected').text();
                    jQuery('#mfcForm :input')
                         .serializeArray()
                         .forEach((input) => {
