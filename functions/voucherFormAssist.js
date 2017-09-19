@@ -39,7 +39,8 @@ function voucherFormAssist(frm, inputs) {
             "SUSE": "2007",
             "USXI": "1950",
             "WENP": "1952",
-            "WSXI": "1955"
+            "WSXI": "1955",
+            "KNIG": "1998"
         };
 
     /*Run at the Start*/
@@ -52,9 +53,9 @@ function voucherFormAssist(frm, inputs) {
 
         function setCarrierRowSource() {
             let sRwSrc = '';
-            for (let car in carrTrf) {
-                sRwSrc += `<option value = "${carrTrf[car]}">${car}</option>`;
-            }
+            Object.keys(carrTrf).sort().forEach(car => {
+                sRwSrc += `<option value = "${carrTrf[car]}">${car.toUpperCase()}</option>`;
+            });
             jQuery('#mfcCarrier').append(sRwSrc);
         };
         
