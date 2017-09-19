@@ -10,8 +10,7 @@ let doc = window.document,
     JDAhelpers = {
         checkForms:         checkForms,
         validateRDC:        validateRDC,
-        validateInitials:   validateInitials,
-        setTrailers:        setTrailers
+        validateInitials:   validateInitials
     },
 
     /**
@@ -19,8 +18,7 @@ let doc = window.document,
      * Functions to check user input or in inputs.js
      */
     inputs = {
-        user: {},
-        trailers: {}
+        user: {}
     },
 
     /**

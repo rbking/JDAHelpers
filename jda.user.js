@@ -24,13 +24,6 @@
         GM_setValue('rdc', rdc.value);
         GM_setValue('ini', ini.value);
 
-        /*
-        ** Leave as empty array [] unless
-        ** Set to a JSON object with two Fields
-        ** i.e. [{"BOL":"2919445","TrailerNum":"279889"},...]
-        */
-        let trls = [];
-        jda.setTrailers(trls);
     /*
     ** Check forms and run helper functions
     */

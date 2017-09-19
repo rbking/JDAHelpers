@@ -58,6 +58,17 @@ function voucherFormAssist(frm, inputs) {
                 }]
             },
             {
+                "name": "Reconsignment",
+                "hide": true,                
+                "optValue": [{                    
+                    "CC": "RCCFR",
+                    "RC": "OBOUND_NO_ES",
+                    "PC": "891305",    
+                    "ST": `L${user.rdc}`,
+                    "OT": "DC"
+                }]
+            },
+            {
                 "name": "Redelivery",
                 "hide": false,                
                 "optValue": [{                    

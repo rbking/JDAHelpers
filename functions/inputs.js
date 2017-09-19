@@ -1,13 +1,4 @@
 /**
- * Inports Trailers JSON object 
- * @param {*} jsonObj 
- */
-function setTrailers(jsonObj) {
-    inputs.trailers = jsonObj;
-};
-
-
-/**
  * Validates user input against a list of known locations
  * @param {*} rdc 
  */
