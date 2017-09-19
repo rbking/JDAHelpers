@@ -8,10 +8,10 @@ function voucherFormAssist(frm, inputs) {
     /*USER AND RDC VARIABLES*/
     let user = inputs.user,
         carr, 
-        dol, 
-
-        /*MAKE A LIST OF KNOW CARRIERS AND THEIR TARRIF CODES*/
-        carrTrf = {
+        dol,
+    
+    /*MAKE A LIST OF KNOW CARRIERS AND THEIR TARRIF CODES*/
+    carrTrf= {
             "AISB": "2422",
             "BNRP": "1959",
             "CDNK": "1961",
@@ -40,8 +40,80 @@ function voucherFormAssist(frm, inputs) {
             "USXI": "1950",
             "WENP": "1952",
             "WSXI": "1955",
+            "WSXI": "1955",
             "KNIG": "1998"
-        };
+        },
+        
+        /*MFC Types*/
+        mfcType = [
+            {
+                "name": "Trailer Detention",
+                "hide": true,                
+                "optValue": [{                    
+                    "CC": "DETFR",
+                    "RC": "INBO_NO_EST",
+                    "PC": "451000",    
+                    "ST": `L${user.rdc}`,
+                    "OT": "HUB"
+                }]
+            },
+            {
+                "name": "Redelivery",
+                "hide": false,                
+                "optValue": [{                    
+                    "CC": "DEPFR",
+                    "RC": "OBOUND_NO_ES",
+                    "PC": "862500",    
+                    "ST": "L",
+                    "OT": "DC"
+                }]
+            },
+            {
+                "name": "Trailer Repair",
+                "hide": true,                
+                "optValue": [{
+                    "CC": "DCEFR",
+                    "RC": "VEH_REPAIRS",
+                    "PC": "891750",    
+                    "ST": `L${user.rdc}`,
+                    "OT": "DC"
+                }]
+            },
+            {
+                "name": "Tolls",  
+                "hide": true,              
+                "optValue": [{                    
+                    "CC": "BRDFR",
+                    "RC": "OBOUND_NO_ES",
+                    "PC": "891305",    
+                    "ST": `L${user.rdc}`,
+                    "OT": "DC"
+                }]
+            },
+            {
+                "name": "Trailer Rental",  
+                "hide": true,              
+                "optValue": [{                    
+                    "CC": "TRCFR",
+                    "RC": "OBOUND_NO_ES",
+                    "PC": "891305",    
+                    "ST": `L${user.rdc}`,
+                    "OT": "DC"
+                }]
+            },
+            {
+                "name": "CNG (Fuel)",  
+                "hide": true,              
+                "optValue": [{                    
+                    "CC": "DFPFR",
+                    "RC": "OBOUND_NO_ES",
+                    "PC": "891305",    
+                    "ST": `L${user.rdc}`,
+                    "OT": "DC"
+                }]
+            }
+        ];
+
 
     /*Run at the Start*/
     init();
@@ -49,7 +121,7 @@ function voucherFormAssist(frm, inputs) {
     function init() {
         addModal();     
         setCarrierRowSource();
-        onMFCTypeChange();
+        setMFCTypeRowSource();
 
         function setCarrierRowSource() {
             let sRwSrc = '';
@@ -58,6 +130,31 @@ function voucherFormAssist(frm, inputs) {
             });
             jQuery('#mfcCarrier').append(sRwSrc);
         };
+
+        function setMFCTypeRowSource() {
+            let sRwSrc = '';
+            mfcType.forEach((type,index) => {                
+                let vals = type.optValue[0],
+                    /* Generate a JSON Object to be Passed through the OnChange Event */
+                    mapper =[
+                        {"name" : "mfcChargeCode",      "value": vals.CC    },
+                        {"name" : "mfcReasonCode",      "value": vals.RC    },
+                        {"name" : "mfcProfitCenter",    "value": vals.PC    },
+                        {"name" : "mfcStore",           "value": vals.ST    },
+                        {"name" : "mfcOrigLocType",     "value": vals.OT    }
+                    ];
+                /* Generate the Rowsource for the Option Buttons */
+                sRwSrc += `<option data-mfc=${JSON.stringify(mapper)} 
+                                   data-hide=${type.hide} 
+                                   value=${index}>${type.name}
+                            </option>`;
+            });       
+
+            jQuery('#mfcType')
+                .append(sRwSrc)
+                .val(0)
+                .change();
+        }
         
     };
 
@@ -74,50 +171,67 @@ function voucherFormAssist(frm, inputs) {
         `);
         /* Add jQuery UI Custom Modal */
         jQuery('body').prepend(`
-            <button id="create-user">Open Modal</button>
+            <button id="openModal">Open Modal</button>
             <div id="dialog-form" title="Miscellaneous Freight Charges">          
                 <form id="mfcForm">
                     <fieldset>
                         <!-- Choose Carrier -->
                         <label for="mfcCarrier">Select Carrier</label>
-                        <select id="mfcCarrier" name="mfcCarrier" class="select ui-widget-content ui-corner-all">
+                        <select id="mfcCarrier" 
+                                name="mfcCarrier" 
+                                class="select ui-widget-content ui-corner-all">
                         </select>
 
                         <!-- Choose MFC Type -->
                         <label for="mfcType">MFC Type</label>
-                        <select id="mfcType" name="mfcType" onChange="onMFCTypeChange(this.value)"
+                        <select id="mfcType" 
+                                name="mfcType" 
+                                onChange="onMFCTypeChange(this.options[this.selectedIndex])"
                                 class="text ui-widget-content ui-corner-all">
-                            <option value=1>Trailer Detention</option>
-                            <option value=2>Redelivery</option>
-                            <option value=3>Trailer Repair</option>
                         </select>
                         
                         <!-- Enter Charge Amount -->
                         <label class="h4">MFC Charge Amount</label>
                         <span style="float:left;margin-top:6px">$</span>
-                        <input type="text" id="mfcAmount" name="mfcAmount" value=50
-                            class="text ui-widget-content ui-corner-all">                                    
+                        <input type="text" 
+                               id="mfcAmount" 
+                               name="mfcAmount" 
+                               value=50
+                               class="text ui-widget-content ui-corner-all">                                    
 
                         <div class="mfc-ops">
                             <!-- Choose Type of Location to Charge -->
                             <label for="mfcOrigLocType">Location Type</label>
-                            <select id="mfcOrigLocType" name="mfcOrigLocType"
-                                class="text ui-widget-content ui-corner-all">
+                            <select id="mfcOrigLocType" 
+                                    name="mfcOrigLocType"
+                                    class="text ui-widget-content ui-corner-all">
                                 <option value="HUB">RDC</option>
                                 <option value="DC">Store</option>                                    
                             </select>
                             
                             <!-- Enter Store to Charge To -->
                             <label for="mfcStore">Charge Location</label>
-                            <input type="text" id="mfcStore" name="mfcStore" value="L${user.rdc}"
-                                class="text ui-widget-content ui-corner-all">
+                            <input type="text" 
+                                   id="mfcStore" 
+                                   name="mfcStore" 
+                                   value="L${user.rdc}"
+                                   class="text ui-widget-content ui-corner-all">
                         </div>
 
                         <!-- Hidden Fields --> 
                         <div>
-                            <input type="hidden" id="mfcChargeCode" name="mfcChargeCode" value="DETFR"></input>
-                            <input type="hidden" id="mfcReasonCode" name="mfcReasonCode" value="INBO_NO_EST"></input>
-                            <input type="hidden" id="mfcProfitCenter"name="mfcProfitCenter" value="451000"></input>                                                                     
+                            <input type="hidden" 
+                                   id="mfcChargeCode" 
+                                   name="mfcChargeCode" 
+                                   value="DETFR"/>
+                            <input type="hidden" 
+                                   id="mfcReasonCode" 
+                                   name="mfcReasonCode" 
+                                   value="INBO_NO_EST"/>
+                            <input type="hidden" 
+                                   id="mfcProfitCenter" 
+                                   name="mfcProfitCenter" 
+                                   value="451000" />                                                                     
                         </div>
 
                         <!-- Allow form submission with keyboard without duplicating the dialog button -->
@@ -127,7 +241,27 @@ function voucherFormAssist(frm, inputs) {
             </div>
             <script>
                 let dialog, 
-                    form;            
+                    form;   
+                
+                function onMFCTypeChange(value) {                
+                    let type = value.dataset;
+                    
+                    /* Hide Certain Controls if not needed */
+                    if(type.hide==='true') { 
+                        jQuery('.mfc-ops').addClass("ui-helper-hidden");
+                    } else {
+                        jQuery('.mfc-ops').removeClass("ui-helper-hidden");
+                    };
+
+                    /* Populate Controls with values */
+                    JSON.parse(type.mfc).forEach((control) => {
+                        jQuery('#'+control.name).val(control.value);
+                    })
+                };
+
+                jQuery( "#openModal" ).button().on( "click", function() {
+                    dialog.dialog( "open" );
+                });         
                 
                 dialog = jQuery( "#dialog-form" ).dialog({
                     autoOpen: true,
@@ -141,19 +275,15 @@ function voucherFormAssist(frm, inputs) {
                         }
                     },
                     close: function() {
-                        form[ 0 ].reset();                        
+                        form[0].reset();                        
                     }
                 });
             
                 form = dialog.find( "form" ).on( "submit", function( event ) {
                     event.preventDefault();
                     onSubmitMFC();;
-                });
-            
-                jQuery( "#create-user" ).button().on( "click", function() {
-                    dialog.dialog( "open" );
-                });
-
+                });           
+                
                 function onSubmitMFC() {
                    let data = {};
                    // Capture all the data
@@ -163,55 +293,7 @@ function voucherFormAssist(frm, inputs) {
                         .forEach((input) => {
                             data[input.name] = input.value
                         });
-                    //console.log(data);
                     fillInDefaults(data);
-                };
-
-                function onMFCTypeChange(value) {
-                    let hide = true,
-                        objVals = [];
-                    
-                    switch (parseInt(value)) {
-                        case 1: // Detention Charges
-                            objVals = [
-                                           { name: "mfcChargeCode"     , value: "DETFR"          },
-                                           { name: "mfcReasonCode"     , value: "INBO_NO_EST"    },
-                                           { name: "mfcProfitCenter"   , value:"451000"          },    
-                                           { name: "mfcStore"          , value: "L${user.rdc}"   },
-                                           { name: "mfcOrigLocType"    , value: "HUB"            }
-                                       ];
-                            break;
-                        case 2: // Redelivery Charges
-                            hide=false;
-                            objVals = [
-                                           { name: "mfcChargeCode"     , value: "DEPFR"          },
-                                           { name: "mfcReasonCode"     , value: "OBOUND_NO_ES"   },
-                                            { name: "mfcProfitCenter"  , value:"862500"          },    
-                                           { name: "mfcStore"          , value: "L"              },
-                                           { name: "mfcOrigLocType"    , value: "DC"             }
-                                       ];
-                            break;
-                        case 3: // Trailer Repairs                            
-                            objVals = [
-                                           { name: "mfcChargeCode"     , value: "DCEFR"          },
-                                           { name: "mfcReasonCode"     , value: "VEH_REPAIRS"    },
-                                           { name: "mfcProfitCenter"   , value:"891750"          },    
-                                           { name: "mfcStore"          , value: "L${user.rdc}"   },
-                                           { name: "mfcOrigLocType"    , value: "DC"             }
-                                       ];                        
-                            break;
-                        default:
-                    };
-
-                    if(hide===true) { 
-                        jQuery('.mfc-ops').addClass("ui-helper-hidden");
-                    } else {
-                        jQuery('.mfc-ops').removeClass("ui-helper-hidden");
-                    };
-
-                    objVals.forEach((hidden) => {
-                        jQuery('#'+hidden.name).val(hidden.value);
-                    });
                 };
 
                 function fillInDefaults(data) {
@@ -219,30 +301,30 @@ function voucherFormAssist(frm, inputs) {
                     let mfcDefaultValues = [
 
                         /*VOUCHER SECTION*/
-                        { name: 'carrCode',         value: data.mfcCarrierName                         },
-                        { name: 'tariffNumber',     value: data.mfcCarrier, colorBg: true },
-                        { name: 'custCode',         value: 'LOW'                        },
-                        { name: 'service',          value: 'TL_VAN'                     },
-                        { name: 'logisticsGroup',   value: 'LOW2'                       },
-                        { name: 'refNumber',        value: formatVoucher()              },
+                        { name: 'carrCode',         value: data.mfcCarrierName                  },
+                        { name: 'tariffNumber',     value: data.mfcCarrier,     colorBg: true   },
+                        { name: 'custCode',         value: 'LOW'                                },
+                        { name: 'service',          value: 'TL_VAN'                             },
+                        { name: 'logisticsGroup',   value: 'LOW2'                               },
+                        { name: 'refNumber',        value: formatVoucher()                      },
 
                         /*ADJUSTMENT SECTION*/
-                        { name: 'level_options',        value: 'OPTION'                       },
-                        { name: 'chargeCode',           value: data.mfcChargeCode,         colorBg: true },
-                        { name: 'reasonCode_options',   value: data.mfcReasonCode,   colorBg: true },
-                        { name: 'chargedAmount',        value: data.mfcAmount,             colorBg: true },
+                        { name: 'level_options',        value: 'OPTION'                             },
+                        { name: 'chargeCode',           value: data.mfcChargeCode,  colorBg: true   },
+                        { name: 'reasonCode_options',   value: data.mfcReasonCode,  colorBg: true   },
+                        { name: 'chargedAmount',        value: data.mfcAmount,      colorBg: true   },
 
                         /*VOUCHER DETAILS SECTION*/
-                        { name: 'shipmentType',         value: 'NR'                     },
+                        { name: 'shipmentType',         value: 'NR'                                 },
                         { name: 'profitCenter_options', value: data.mfcProfitCenter, colorBg: true  },
-                        { name: 'voucherType_options',  value: 'MFC'                    },
-                        { name: 'costCenter_options',   value: 'DOMESTIC'               },
+                        { name: 'voucherType_options',  value: 'MFC'                                },
+                        { name: 'costCenter_options',   value: 'DOMESTIC'                           },
 
                         /*ORIGIN/DESTINATION SECTION*/
-                        { name: 'origLocType',  value: data.mfcOrigLocType,           colorBg: true },
-                        { name: 'origLocID',    value: data.mfcStore,  colorBg: true },
-                        { name: 'destLocType',  value: 'HUB',           colorBg: true },
-                        { name: 'destLocID',    value: "L${user.rdc}",  colorBg: true }  
+                        { name: 'origLocType',  value: data.mfcOrigLocType, colorBg: true },
+                        { name: 'origLocID',    value: data.mfcStore,       colorBg: true },
+                        { name: 'destLocType',  value: 'HUB',               colorBg: true },
+                        { name: 'destLocID',    value: "L${user.rdc}",      colorBg: true }  
                     ];
 
                     /*LOOP THROUGH FIELDS AND ADD VALUES AND COLOR*/
@@ -273,11 +355,12 @@ function voucherFormAssist(frm, inputs) {
                             return String('00'+data).slice(-2);
                         };
                     };
-                }
+                };
 
             </script>
 
         `);
     }    
     
+
 };
