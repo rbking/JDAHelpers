@@ -54,7 +54,7 @@ function voucherFormAssist(frm, inputs) {
                     "RC": "OBOUND_NO_ES",
                     "PC": "891305",    
                     "ST": `L${user.rdc}`,
-                    "OT": "DC"
+                    "OT": "HUB"
                 }]
             },
             {
@@ -65,7 +65,7 @@ function voucherFormAssist(frm, inputs) {
                     "RC": "OBOUND_NO_ES",
                     "PC": "891305",    
                     "ST": `L${user.rdc}`,
-                    "OT": "DC"
+                    "OT": "HUB"
                 }]
             },
             {
@@ -98,7 +98,7 @@ function voucherFormAssist(frm, inputs) {
                     "RC": "OBOUND_NO_ES",
                     "PC": "891305",    
                     "ST": `L${user.rdc}`,
-                    "OT": "DC"
+                    "OT": "HUB"
                 }]
             },
             {
@@ -109,7 +109,7 @@ function voucherFormAssist(frm, inputs) {
                     "RC": "VEH_REPAIRS",
                     "PC": "891750",    
                     "ST": `L${user.rdc}`,
-                    "OT": "DC"
+                    "OT": "HUB"
                 }]
             },            
             {
@@ -120,7 +120,7 @@ function voucherFormAssist(frm, inputs) {
                     "RC": "OBOUND_NO_ES",
                     "PC": "891305",    
                     "ST": `L${user.rdc}`,
-                    "OT": "DC"
+                    "OT": "HUB"
                 }]
             }
         ];
