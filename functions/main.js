@@ -31,10 +31,11 @@ let doc = window.document,
         { 'formObj': doc.MemoForm,                      'helperFn': memoFormAssist              },
         { 'formObj': doc.RateCalcMainForm,              'helperFn': rateFormAssist              },
         { 'formObj': doc.StopConfirmationForm,          'helperFn': stopConfirmationFormAssist  },
+        { 'formObj': doc.LoadConfirmationForm,          'helperFn': stopConfirmationFormAssist  },
         { 'formObj': doc.LoadVehicleInfoForm,           'helperFn': vehicleFormAssist           },
         { 'formObj': doc.LoadList,                      'helperFn': loadFormAssist              },
         { 'formObj': doc.LoadListForm,                  'helperFn': loadListFormAssist          },
-        { 'formObj': doc.StopListForm,                  'helperFn': stopFormAssist              },
+        { 'formObj': doc.StopListForm,                  'helperFn': stopFormAssist              },        
         { 'formObj': doc.IntegrationRequestListForm,    'helperFn': integrateFormAssist         },
         { 'formObj': doc.IntegrationRequestUploadForm,  'helperFn': integrateUpFormAssist       }       
     ];
