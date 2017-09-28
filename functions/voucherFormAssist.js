@@ -41,7 +41,8 @@ function voucherFormAssist(frm, inputs) {
             "WENP": "1952",
             "WSXI": "1955",
             "WSXI": "1955",
-            "KNIG": "1998"
+            "KNIG": "1998",
+            "DTNF": "1720"
         },
         
         /*MFC Types*/
