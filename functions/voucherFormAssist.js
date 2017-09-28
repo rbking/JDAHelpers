@@ -42,7 +42,9 @@ function voucherFormAssist(frm, inputs) {
             "WSXI": "1955",
             "WSXI": "1955",
             "KNIG": "1998",
-            "DTNF": "1720"
+            "DTNF": "1720",
+            "NAFD": "1922",
+            "SNCY": "1925"
         },
         
         /*MFC Types*/
