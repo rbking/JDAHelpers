@@ -84,12 +84,23 @@ function voucherFormAssist(frm, inputs) {
                 }]
             },
             {
-                "name": "Trailer Detention",
+                "name": "Trailer Detention (Inbound PO)",
                 "hide": true,                
                 "optValue": [{                    
                     "CC": "DETFR",
                     "RC": "INBO_NO_EST",
                     "PC": "451000",    
+                    "ST": `L${user.rdc}`,
+                    "OT": "HUB"
+                }]
+            },
+            {
+                "name": "Trailer Detention (DC Pays)",
+                "hide": true,                
+                "optValue": [{                    
+                    "CC": "DETFR",
+                    "RC": "OBOUND_NO_ES",
+                    "PC": "891302",    
                     "ST": `L${user.rdc}`,
                     "OT": "HUB"
                 }]
@@ -167,7 +178,7 @@ function voucherFormAssist(frm, inputs) {
 
             jQuery('#mfcType')
                 .append(sRwSrc)
-                .val('Trailer Detention')
+                .val('Trailer Detention (Inbound PO)')
                 .change();
         }
         
