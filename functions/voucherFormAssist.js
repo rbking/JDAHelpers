@@ -54,7 +54,7 @@ function voucherFormAssist(frm, inputs) {
                 "name": "CNG (Fuel)",  
                 "hide": true,              
                 "optValue": [{                    
-                    "CC": "DFPFR",
+                    "CC": "DEPFR",
                     "RC": "OBOUND_NO_ES",
                     "PC": "891305",    
                     "ST": `L${user.rdc}`,
