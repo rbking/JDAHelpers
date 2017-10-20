@@ -45,7 +45,20 @@ function voucherFormAssist(frm, inputs) {
             "DTNF": "1720",
             "NAFD": "1922",
             "SNCY": "1925",
-            "CLXE": "1671"
+            "CLXE": "1671",
+            "BIOS": "1660",
+            "BTIU": "1653",
+            "CDAM": "1678",
+            "CNBH": "1672",
+            "CNPJ": "1689",
+            "NFCA": "1777",
+            "TNXC": "1842",
+            "TNXU": "2286",
+            "TPTO": "1845",
+            "TPTP": "1846",
+            "TRRB": "1847",
+            "SNCF": "1806"
+
         },
         
         /*MFC Types*/
