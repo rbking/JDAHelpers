@@ -57,8 +57,8 @@ function voucherFormAssist(frm, inputs) {
             "TPTO": "1845",
             "TPTP": "1846",
             "TRRB": "1847",
-            "SNCF": "1806"
-
+            "SNCF": "1806",
+            "CHXD": "1963"
         },
         
         /*MFC Types*/
