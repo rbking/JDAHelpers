@@ -9,9 +9,9 @@
 
 3 **CNTRL+click** on [jda.user.js](../../raw/master/jda.user.js) to install
 
-![jda.user.js](../../raw/master/imgs/jda_install.jpg)
-
 4 The next time you open JDA, you will be asked for your **RDC Number** and **3 Initials**.
+
+![jda.user.js](../../raw/master/imgs/settings.jpg)
 
 5 **Any future updates will be installed by Tampermonkey as it will periodically check for updates.**
 

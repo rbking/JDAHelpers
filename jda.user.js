@@ -11,22 +11,32 @@
 // ==/UserScript==
 
 (function(jda) {
+
+    /**
+     * Load Settings Values
+     */
     let rdc = GM_getValue('rdc',0),
         ini = GM_getValue('ini','');
 
-    /*
-    ** Validate User Information
-    */
-    rdc = jda.validateRDC(rdc);
-    ini = jda.validateInitials(ini);
+    /**
+     * Add Settings Update Event Listener
+     */
+    document.addEventListener("updateJHS", updateJHSHandler, false);
 
-    if(rdc.status && ini.status) {
-        GM_setValue('rdc', rdc.value);
-        GM_setValue('ini', ini.value);
+    function updateJHSHandler(e) {
+       let settings = e.detail.settings;
+        GM_setValue('rdc', settings.rdc);
+        GM_setValue('ini', settings.ini);
+    }
+
+    /*
+    ** Load User Information to JDA Helpers
+    */
+    rdc = jda.loadRDC(rdc);
+    ini = jda.loadInitials(ini);
 
     /*
     ** Check forms and run helper functions
     */
-        jda.checkForms();
-    }
+    jda.checkForms();
 })(JDAhelpers);

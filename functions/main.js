@@ -8,9 +8,9 @@ let doc = window.document,
      * variables inside inputs object
      */
     JDAhelpers = {
-        checkForms:         checkForms,
-        validateRDC:        validateRDC,
-        validateInitials:   validateInitials
+        checkForms:     checkForms,
+        loadRDC:        loadRDC,
+        loadInitials:   loadInitials
     },
 
     /**
@@ -47,7 +47,16 @@ let doc = window.document,
 function checkForms() {
     frms.some((index, frm) => {
         let form = frms[frm];
-        if (typeof form.formObj != 'undefined') { form.helperFn(form.formObj, inputs); }
+        if (typeof form.formObj != 'undefined') { 
+            /**
+             * Add User Settings Modal from inputs.js
+             */
+            addUserSettingsModal(inputs);
+            /**
+             * Call the form's helper
+             */
+            form.helperFn(form.formObj, inputs); 
+        }
     });
 };
 
