@@ -251,7 +251,17 @@ function voucherFormAssist(frm, inputs) {
                 }]
             },
             {
-                "name": "Store Detention",
+                "name": "ICBs to ADC",
+                "hide": false,                
+                "optValue": [{                    
+                    "CC": "EXMFR",
+                    "PC": "862500",    
+                    "ST": "L",
+                    "OT": "DC"
+                }]
+            } ,
+            {
+                "name": "ADC/Store Detention",
                 "hide": false,                
                 "optValue": [{                    
                     "CC": "DEPFR",
