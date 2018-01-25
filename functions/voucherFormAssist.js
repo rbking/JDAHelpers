@@ -147,7 +147,8 @@ function voucherFormAssist(frm, inputs) {
             "RGLJ":"1787",
             "SCQA":"1796",
             "XPOL":"1956",
-            "PASC":"2662"
+            "PASC":"2662",
+            "TYEI":"1978",
         };
     };
 
